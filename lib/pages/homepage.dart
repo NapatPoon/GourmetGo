@@ -63,12 +63,15 @@ class _HomepageState extends State<Homepage> {
                       ),
                       onChanged: (value) async {
                         if (value.isNotEmpty) {
-                          // Fetch recipes based on the search query
-                          List<FoodRecipe> fetchedRecipes =
-                              await apiService.searchFood(value);
-                          setState(() {
-                            recipes = fetchedRecipes;
-                          });
+                          try {
+                            List<FoodRecipe> fetchedRecipes =
+                                await apiService.searchFood(value);
+                            setState(() {
+                              recipes = fetchedRecipes;
+                            });
+                          } catch (e) {
+                            print('Error fetching recipes: $e');
+                          }
                         } else {
                           setState(() {
                             recipes = [];
@@ -79,8 +82,8 @@ class _HomepageState extends State<Homepage> {
                   ),
                   IconButton(
                     icon: Icon(Icons.filter_list, color: Colors.black),
-                    onPressed: () {
-                      // TODO: Implement filter
+                    onPressed: () async {
+                      
                     },
                   )
                 ],
@@ -93,8 +96,7 @@ class _HomepageState extends State<Homepage> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(recipes[index].title),
-                    subtitle: Text(recipes[index].description),
-                    leading: Image.network(recipes[index].imageUrl),
+                    leading: Image.network(recipes[index].image),
                   );
                 },
               ),
