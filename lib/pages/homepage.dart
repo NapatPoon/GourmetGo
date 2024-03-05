@@ -2,9 +2,19 @@
 import 'package:flutter/material.dart';
 import '../components/bottom_nav.dart';
 import 'food_allergy.dart';
+import '../models/recipe.dart';
+import '../services/api.dart';
 
-class Homepage extends StatelessWidget {
-  const Homepage({super.key});
+class Homepage extends StatefulWidget {
+  const Homepage({Key? key}) : super(key: key);
+
+  @override
+  _HomepageState createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  final ApiService apiService = ApiService();
+  List<FoodRecipe> recipes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -36,34 +46,61 @@ class Homepage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Let's cook!",
-                          prefixIcon: Icon(Icons.search, color: Colors.black),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.white), // Set border color
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey[200],
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Let's cook!",
+                        prefixIcon: Icon(Icons.search, color: Colors.black),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.white), // Set border color
                         ),
-                        onChanged: (value) {
-                          // TODO: add search
-                        },
+                        filled: true,
+                        fillColor: Colors.grey[200],
                       ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.filter_list, color: Colors.black),
-                      onPressed: () {
-                        // TODO: Filter
+                      onChanged: (value) async {
+                        if (value.isNotEmpty) {
+                          try {
+                            List<FoodRecipe> fetchedRecipes =
+                                await apiService.searchFood(value);
+                            setState(() {
+                              recipes = fetchedRecipes;
+                            });
+                          } catch (e) {
+                            print('Error fetching recipes: $e');
+                          }
+                        } else {
+                          setState(() {
+                            recipes = [];
+                          });
+                        }
                       },
-                    )
-                  ],
-                ))
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.filter_list, color: Colors.black),
+                    onPressed: () async {
+                      
+                    },
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: recipes.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(recipes[index].title),
+                    leading: Image.network(recipes[index].image),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
