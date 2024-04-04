@@ -2,9 +2,18 @@
 import 'package:flutter/material.dart';
 import './signup.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _comfirmerdPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
