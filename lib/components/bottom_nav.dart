@@ -28,8 +28,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
           label: 'Favorite',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.star),
-          label: 'Recommendation',
+          icon: Icon(Icons.video_camera_front),
+          label: 'Video',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.edit),
