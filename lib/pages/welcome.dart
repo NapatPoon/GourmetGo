@@ -1,24 +1,23 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'login.dart';
-// import 'package:flutter/widgets.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key});
+  const WelcomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Container(
+        constraints: BoxConstraints.expand(
+          height: MediaQuery.of(context).size.height,
+        ),
+        width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/background.png'),
-            fit: BoxFit.cover,
-          ),
+          color: Colors.white, // Change to the desired color
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,7 +34,7 @@ class WelcomePage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.black54,
+                color: Colors.black,
               ),
             ),
             Spacer(),
@@ -43,8 +42,10 @@ class WelcomePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 100),
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
+                  );
                 },
                 color: Colors.teal,
                 padding: EdgeInsets.all(16),

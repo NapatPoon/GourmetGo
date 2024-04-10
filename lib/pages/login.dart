@@ -1,9 +1,22 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:gourmet_app/auth/auth_service.dart';
+import 'package:gourmet_app/pages/homepage.dart';
 import './signup.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _comfirmerdPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +52,15 @@ class Login extends StatelessWidget {
             ),
             SizedBox(height: 48.0),
             TextFormField(
+              controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
+                  border: OutlineInputBorder(), hintText: 'Email'),
             ),
             SizedBox(height: 8.0),
             TextFormField(
               obscureText: true,
+              controller: _passwordController,
               decoration: InputDecoration(
                 labelText: 'Enter Password',
                 border: OutlineInputBorder(),
@@ -61,8 +74,16 @@ class Login extends StatelessWidget {
                   style: TextStyle(color: Colors.teal)),
             ),
             ElevatedButton(
-              onPressed: () {
-                // TODO: Add sign-in logic
+              onPressed: () async {
+                final message = await AuthService().login(
+                    email: _emailController.text,
+                    password: _passwordController.text);
+                if (message!.contains('Success')) {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Homepage()));
+                }
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(message)));
               },
               // ignore: sort_child_properties_last
               child: Text('Sign In'),
