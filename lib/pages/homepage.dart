@@ -37,6 +37,7 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.teal,
         title: Text(
           'Welcome, ${user?.displayName ?? 'Guest'}', // Changed greeting text

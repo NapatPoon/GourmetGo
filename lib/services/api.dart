@@ -12,7 +12,7 @@ class ApiService {
 
   Future<List<FoodRecipe>> searchFood(String query) async {
     final response = await http.get(Uri.parse(
-        'https://api.spoonacular.com/recipes/complexSearch?query=$query${cuisine != null ? '&cuisine=$cuisine' : ''}&apiKey=$apiKey&addRecipeInformation=True&addRecipeInstructions=True&number=10'));
+        'https://api.spoonacular.com/recipes/complexSearch?query=$query${cuisine != null ? '&cuisine=$cuisine' : ''}&apiKey=$apiKey&addRecipeInformation=True&addRecipeInstructions=True&number=10&excludeIngredients=pork,fish,prawn,Shrimp'));
     if (response.statusCode == 200) {
       // print(response.body);
       return (json.decode(response.body)['results'] as List)
@@ -52,10 +52,23 @@ class ApiService {
 
   Future<List<FoodRecipe>> getRecommendedRecipes(String query) async {
     var url = Uri.parse(
-        'https://api.spoonacular.com/recipes/complexSearch?query=$query&apiKey=$apiKey&number=3');
+        'https://api.spoonacular.com/recipes/complexSearch?query=$query&apiKey=$apiKey&number=5');
     var response = await http.get(url);
     if (response.statusCode == 200) {
       print(response.body);
+      return (json.decode(response.body)['results'] as List)
+          .map((json) => FoodRecipe.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load recipes');
+    }
+  }
+
+  Future<List<FoodRecipe>> searchExclude(String query) async {
+    final response = await http.get(Uri.parse(
+        'https://api.spoonacular.com/recipes/complexSearch?query=$query${cuisine != null ? '&cuisine=$cuisine' : ''}&apiKey=$apiKey&addRecipeInformation=True&addRecipeInstructions=True&number=3&excludeIngredients='));
+    if (response.statusCode == 200) {
+      // print(response.body);
       return (json.decode(response.body)['results'] as List)
           .map((json) => FoodRecipe.fromJson(json))
           .toList();

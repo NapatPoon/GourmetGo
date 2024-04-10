@@ -124,7 +124,7 @@ class SignUpState extends State<SignUp> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Login()));
+                                  builder: (context) => FoodAllergy()));
                         }
                         ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(message)));
@@ -143,7 +143,7 @@ class SignUpState extends State<SignUp> {
               TextButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Homepage()));
+                      MaterialPageRoute(builder: (context) => Login()));
                 },
                 child: Text('Already have an account? Sign In',
                     style: TextStyle(color: Colors.teal)),

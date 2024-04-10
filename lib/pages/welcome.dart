@@ -17,10 +17,7 @@ class WelcomePage extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/background.jpg'),
-            fit: BoxFit.fill,
-          ),
+          color: Colors.white, // Change to the desired color
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +34,7 @@ class WelcomePage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             Spacer(),

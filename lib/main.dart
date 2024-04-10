@@ -9,7 +9,6 @@ import 'firebase_options.dart';
 import './pages/search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -23,7 +22,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: 'Welcome Page', home: Login());
+    return const MaterialApp(title: 'Welcome Page', home: WelcomePage());
     // home: Login(),
     // home: Login());
     // home: FoodAllergy(),
